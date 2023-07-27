@@ -27,4 +27,4 @@ Note that you cannot run commit.sh twice without recomposing tpg22-control-build
 
 This is because the script relies on the names of the containers, and these get substituted for image IDs when committed.
 
-The script will of course cease to work if/when containers change name, though the :numerical_suffix can change (eg stoplight/prism:2) 
+The script will of course cease to work if/when containers change name, though the :numerical_suffix can change (eg stoplight/prism:4) 
