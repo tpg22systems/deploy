@@ -36,8 +36,8 @@ That's it really.
 
 ## Deploy Docker Compose File
 
-This is currently dependent on the Mosqitto config directory from tpg22-control-build as well as the Compose File.  Hopefully this can be remedied.
+This is currently dependent on the Mosqitto config directory from tpg22-control-build as well as the Compose File.  Hopefully this can be remedied - a single-file deployment would be very nice.
 
-It has been tested as far as getting the green status lights on the gui, but it is possible that there are subtler issues that we have not noticed - perhaps other config directories from tpg22-control-build ?
+It has been tested as far as getting the green status lights on the gui, but it is possible that there are subtler issues that we have not noticed - perhaps it actually needs other config directories from tpg22-control-build?
 
 Just CD to the directory, and run 'docker compose up -d' in the usual way. Images will be fetched/updated from the Registry
