@@ -28,11 +28,11 @@ This script commits to docker.camart.co.uk:5000 registry.  This registry does no
 
 That's it really.
 
-Note that you cannot run commit.sh twice without recomposing tpg22-control-build (not that you should need to)
+### Caveats
 
-This is because the script relies on the names of the containers, and these get substituted for image IDs when committed.
-
-The script will of course cease to work if/when containers change name, though the :numerical_suffix can change (eg stoplight/prism:4) 
+* You cannot run commit.sh twice without recomposing tpg22-control-build (not that you should need to).  This is because the script relies on the names of the containers, and these get substituted for image IDs when committed.
+* The names of the containers cannot be changed due to grepping for the names, however, the :numerical_suffix can change (eg stoplight/prism:4) 
+* We probably need to extend the script to support both UAT and Live ("latest") versions, because if we use the Registry to get images onto UAT, and the live system reboots, it will automatically pull the UAT version onto live 
 
 ## Deploy Docker Compose File
 
