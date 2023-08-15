@@ -1,0 +1,26 @@
+################################################################################
+# Game Control System Docker Dev Build
+# 
+################################################################################
+# docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d
+################################################################################
+version: "3.7"
+
+services:
+  logic:    
+    build: ../node-red-control    
+    ports:  
+      - "1880:1880"
+      - "9229:9229"   
+      - "7000:7000"
+      - "8000:8000" 
+  app:
+    build: ../web    
+  editor:
+    container_name: editor
+    restart: unless-stopped
+    build: ../editor
+    ports: 
+      - 3000:3000
+    volumes: 
+    - ${LOGIC_CONFIG:-logic-config}:/home/workspace/config

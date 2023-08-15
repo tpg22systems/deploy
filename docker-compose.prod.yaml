@@ -1,0 +1,12 @@
+################################################################################
+# Game Control System Docker Prod Build
+################################################################################
+# docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d
+################################################################################
+version: "3.7"
+
+services:
+  logic:
+    image: docker.camart.co.uk:5000/tpg22-control-build-logic:prod    
+  app:    
+    image: docker.camart.co.uk:5000/tpg22-control-build-app:prod    

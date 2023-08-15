@@ -7,16 +7,13 @@ version: "3.7"
 
 services:
   logic:
-    container_name: img_node-red
-    #    build: node-red-control
-    image: docker.camart.co.uk:5000/tpg22-control-build-logic:latest
+    container_name: node-red
+    image: ${REGISTRY:-docker.camart.co.uk:5000}/tpg22-control-build-logic:latest    
     restart: always
     environment:
       - TZ=Europe/London
       - NODE_RED_CREDENTIAL_SECRET      
     ports:
-     # - "1880:1880"
-      - "9229:9229"
       - "7000:7000"
       - "8000:8000"
     networks:
@@ -24,16 +21,14 @@ services:
     volumes:
       - ${LOGIC_FLOW:-logic-flow}:/data/projects/logic
       - node-red-context:/data/context
-      - database:/data/sqlite
       - ${LOGIC_CONFIG:-logic-config}:/data/config
       - ${LOGIC_CUSTOM:-logic-custom}:/data/custom 
       - ${SPEC_SOURCE:-api-spec}:/data/spec:ro
     extra_hosts:
       mqttbroker: ${MQTT_BROKER_IP:-host-gateway}
   app:
-    container_name: img_app
-    #    build: web
-    image: docker.camart.co.uk:5000/tpg22-control-build-app:latest
+    container_name: app
+    image: ${REGISTRY:-docker.camart.co.uk:5000}/tpg22-control-build-app:latest
     restart: always
     ports: 
       - "${APP_HTTP_PORT:-80}:80"
@@ -44,9 +39,8 @@ services:
       - ${APP_SOURCE:-app-source}:/usr/share/nginx/html/client
       - ${SPEC_SOURCE:-api-spec}:/usr/share/nginx/html/spec
   prism:
-    container_name: img_prism
-    #    image: stoplight/prism:4
-    image: docker.camart.co.uk:5000/stoplight/prism:latest
+    container_name: prism
+    image: stoplight/prism:4
     restart: always
     command: 'proxy -h 0.0.0.0 /spec/api/gamelogic.openapi.yaml http://logic:1880/v1/'
     volumes:      
@@ -54,24 +48,21 @@ services:
     networks:
       - topgolf  
     ports:
-      # Serve the proxied API port 8080
       - "4010:4010"
   couchdb:
-    container_name: img_couchdb
-    #build: couchdb
-    image: docker.camart.co.uk:5000/tpg22-control-build-couchdb:latest
+    container_name: couchdb
+    image: couchdb
     restart: always
     volumes:
+      - ./couchdb/:/opt/couchdb/etc/local.d
       - ${COUCHDB_DATA:-couchdb-data}:/opt/couchdb/data
-      - ${COUCHDB_CONF:-couchdb-conf}:/opt/couchdb/etc/local.d
     networks:
       - topgolf
     ports:
       - "5984:5984"
   ntp:
-    #image: cturra/ntp
-    image: docker.camart.co.uk:5000/cturra/ntp:latest
-    container_name: img_ntp
+    image: cturra/ntp
+    container_name: ntp
     restart: always
     ports:
       - 123:123/udp
@@ -81,10 +72,9 @@ services:
     networks:
       - topgolf
   mosquitto:
-    container_name: img_mqtt
+    container_name: mqtt
     restart: unless-stopped
-    #image: eclipse-mosquitto:2
-    image: docker.camart.co.uk:5000/eclipse-mosquitto:latest
+    image: eclipse-mosquitto:2
     volumes:
       - ./mosquitto/:/mosquitto/config/:ro      
     ports:
@@ -92,17 +82,6 @@ services:
       - 9001:9001
     networks:
       - topgolf
-  editor:
-    container_name: img_editor
-    restart: unless-stopped
-    #build: editor
-    image: docker.camart.co.uk:5000/tpg22-control-build-editor:latest
-    ports: 
-      - 3000:3000
-    volumes: 
-    - ${LOGIC_CONFIG:-logic-config}:/home/workspace/config
-
-
 volumes:
   logic-flow:
   node-red-context:
