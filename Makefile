@@ -1,4 +1,5 @@
-.PHONY: staging prod dev down down-prod down-dev wipe
+#!make
+.PHONY: staging prod dev down down-prod down-dev wipe logs
 staging:
 	@docker compose up -d
 
@@ -17,7 +18,12 @@ prod-down:
 dev-down:
 	@docker compose -f docker-compose.yaml -f docker-compose.dev.yaml down
 
+logs: 
+	@docker compose logs -f 
+
 wipe:
 # clear all local containers
 	@docker ps -aq | xargs docker stop | xargs docker rm
+
+
 
