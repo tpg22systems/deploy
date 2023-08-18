@@ -26,20 +26,20 @@ This script commits to docker.camart.co.uk:5000 registry.  This registry does no
 
 ## Usage
 
-### Staging server (default)
+### Production server (default)
 
-To run a staging server, simply invoke make: 
+To run a server using images tagged as "prod", simply invoke make: 
 
 ```bash
 make 
 ```
 
-### Production server 
+### Staging server 
 
-To run a production server use the prod recipe:
+To run a staving server, which will load images tagged "latest"  use the "staging" recipe:
 
 ```bash
-make prod
+make staging
 ```
 
 ### Development server 
@@ -55,6 +55,8 @@ make dev
 ### Updating to the latest images
 
 Docker compose will automatically swap out containers. Runing make again, with the correct parameters should replace images that need updates. 
+
+Running *make* again will shut down only the images that need changing, and update them. 
 
 ### Shutdown
 
