@@ -10,6 +10,8 @@ services:
     container_name: node-red
     image: ${REGISTRY:-docker.camart.co.uk:5000}/tpg22-control-build-logic:latest    
     restart: always
+    depends_on:
+      - couchdb
     environment:
       - TZ=Europe/London
       - NODE_RED_CREDENTIAL_SECRET      
@@ -61,8 +63,10 @@ services:
       - ${COUCHDB_DATA:-couchdb-data}:/opt/couchdb/data
     networks:
       - topgolf
+    expose: 
+      - 5984
     ports:
-      - "5984:5984"
+      - 5984:5984
   ntp:
     image: cturra/ntp
     container_name: ntp
@@ -136,7 +140,8 @@ services:
     environment:    
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-golf}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASS:-charts}
-      - GF_USERS_ALLOW_SIGN_UP=false    
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_LIVE_ALLOWED_ORIGINS = gamecontrolsystem.com:3000,192.168.11.251:3000
   nodeexporter:
     image: prom/node-exporter:latest
     container_name: monitoring_node_exporter
