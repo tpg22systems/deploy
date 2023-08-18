@@ -35,6 +35,7 @@ services:
       - "${APP_HTTPS_PORT:-443}:443"
       - 8080:8080
       - 9090:9090
+      - 3030:3030
     networks:
       - topgolf  
     volumes: 
@@ -86,22 +87,23 @@ services:
       - topgolf
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
-    #ports:
-    #  - 9090:9090
+    container_name: monitoring_prometheus
+    expose:
+      - 9090
     command:
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    depends_on:
-      - cadvisor
+    links: 
+      - cadvisor:cadvisor
+      - nodeexporter:nodeexporter
     networks:
       - topgolf
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
-    container_name: cadvisor
-    #ports:
-    #  - 8080:8080
+    container_name: monitoring_cadvisor
+    expose:
+      - 8080
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -118,6 +120,34 @@ services:
     #  - 6379:6379
     networks:
       - topgolf
+  grafana:
+    image: grafana/grafana:latest
+    container_name: monitoring_grafana
+    links:
+      - prometheus:prometheus      
+    expose:
+      - 3000
+    restart: unless-stopped
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana-data:/var/lib/grafana
+    networks:
+      - topgolf
+    environment:    
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-golf}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASS:-charts}
+      - GF_USERS_ALLOW_SIGN_UP=false    
+  nodeexporter:
+    image: prom/node-exporter:latest
+    container_name: monitoring_node_exporter
+    restart: unless-stopped
+    ports:
+      - 9100:9100
+    expose:
+      - 9100
+    networks:
+      - topgolf
+
 volumes:
   logic-flow:
   node-red-context:
@@ -128,6 +158,7 @@ volumes:
   database:
   couchdb-data:
   couchdb-conf:
+  grafana-data:
   
 networks:
   topgolf:

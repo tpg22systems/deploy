@@ -25,6 +25,8 @@ logs:
 wipe:
 # clear all local containers
 	@docker ps -aq | xargs docker stop | xargs docker rm
+	@docker system prune -af --volumes  
+	@docker volume prune
 
 
 
