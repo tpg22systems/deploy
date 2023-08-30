@@ -103,6 +103,8 @@ services:
       - nodeexporter:nodeexporter
     networks:
       - topgolf
+    profiles:
+      - monitoring
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: monitoring_cadvisor
