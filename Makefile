@@ -2,13 +2,16 @@
 .PHONY: staging prod dev prod-monitoring down down-prod down-staging down-dev wipe logs cache-images
 
 prod:
+	@docker compose pull
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d --remove-orphans
 
 prod-monitoring:
+	@docker compose pull
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml --profile monitoring up -d --remove-orphans  
 
 
 staging:
+	@docker compose pull
 	@docker compose up -d  --remove-orphans
 
 dev:
