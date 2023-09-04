@@ -1,9 +1,10 @@
 #!make
-.PHONY: staging prod dev prod-monitoring down down-prod down-staging down-dev wipe logs cache-images
+.PHONY: staging prod dev prod-monitoring down down-prod down-staging down-dev wipe logs config
 
 prod:
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml pull
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d --remove-orphans
+	wget -O - http://localhost/api/vi/status
 
 prod-monitoring:
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml pull
@@ -39,4 +40,7 @@ wipe:
 	@docker images -a | xargs docker rmi 
 	@docker system prune -af --volumes  
 	@docker volume prune
+
+config:
+	@docker compose exec --workdir /data/config logic git pull
 
