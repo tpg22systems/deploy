@@ -4,7 +4,7 @@
 prod:
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml pull
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d --remove-orphans
-	wget -O - http://localhost/api/vi/status
+	wget -O - http://localhost/api/v1/status
 
 prod-monitoring:
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml pull
