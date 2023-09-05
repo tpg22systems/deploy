@@ -1,10 +1,10 @@
 #!make
-.PHONY: staging prod dev prod-monitoring down down-prod down-staging down-dev wipe logs config
+.PHONY: staging prod dev prod-monitoring down down-prod down-staging down-dev wipe logs config status
 
 prod:
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml pull
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d --remove-orphans
-	wget -O - http://localhost/api/v1/status
+	
 
 prod-monitoring:
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml pull
@@ -44,3 +44,5 @@ wipe:
 config:
 	@docker compose exec --workdir /data/config logic git pull
 
+status:
+	wget -O - http://localhost/api/v1/status
