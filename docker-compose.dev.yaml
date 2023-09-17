@@ -16,11 +16,4 @@ services:
       - "8000:8000" 
   app:
     build: ../web    
-  editor:
-    container_name: editor
-    restart: unless-stopped
-    build: ../editor
-    ports: 
-      - 3000:3000
-    volumes: 
-    - ${LOGIC_CONFIG:-logic-config}:/home/workspace/config
+
