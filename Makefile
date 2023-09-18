@@ -16,7 +16,7 @@ staging:
 	@docker compose up -d  --remove-orphans
 
 dev:
-	@docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d --build --remove-orphans
+	@docker compose -f docker-compose.yaml -f docker-compose.dev.yaml --profile monitoring up -d --build --remove-orphans 
 
 down: 
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml down

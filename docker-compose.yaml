@@ -126,8 +126,8 @@ services:
     container_name: redis
     profiles:
       - monitoring
-    #ports:
-    #  - 6379:6379
+    ports:
+      - 6379:6379
     networks:
       - topgolf
   grafana:
