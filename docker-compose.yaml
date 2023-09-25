@@ -21,7 +21,7 @@ services:
     networks:
       - topgolf
     volumes:      
-      - node-red-context:/data/context      
+      - ${LOGIC_CONTEXT:-node-red-context}:/data/context      
       - ${LOGIC_CUSTOM:-logic-custom}:/data/custom 
       - ${SPEC_SOURCE:-api-spec}:/data/spec:ro
     extra_hosts:

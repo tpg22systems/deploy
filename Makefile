@@ -11,6 +11,7 @@ prod-monitoring:
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml --profile monitoring up -d --remove-orphans  
 
 
+
 staging:
 	@docker compose pull
 	@docker compose up -d  --remove-orphans
@@ -19,7 +20,7 @@ dev:
 	@docker compose -f docker-compose.yaml -f docker-compose.dev.yaml --profile monitoring up -d --build --remove-orphans 
 
 down: 
-	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml down
+	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml --profile monitoring down
 
 staging-down: 
 	@docker compose down
@@ -31,7 +32,7 @@ prod-monitoring-down:
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml --profile monitoring down
 
 dev-down:
-	@docker compose -f docker-compose.yaml -f docker-compose.dev.yaml down
+	@docker compose -f docker-compose.yaml -f docker-compose.dev.yaml --profile monitoring down
 
 logs: 
 	@docker compose logs -f 

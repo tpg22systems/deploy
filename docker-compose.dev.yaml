@@ -16,7 +16,7 @@ services:
       - "8000:8000"
     volumes:
       - ${LOGIC_FLOW:-logic-flow}:/data/projects/logic
-      - node-red-context:/data/context
+      - ${LOGIC_CONTEXT:-node-red-context}:/data/context      
       - ${LOGIC_CONFIG:-logic-config}:/data/config
       - ${LOGIC_CUSTOM:-logic-custom}:/data/custom 
       - ${SPEC_SOURCE:-api-spec}:/data/spec:ro
