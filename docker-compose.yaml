@@ -20,10 +20,8 @@ services:
       - "8000:8000"
     networks:
       - topgolf
-    volumes:
-     # - ${LOGIC_FLOW:-logic-flow}:/data/projects/logic
-      - node-red-context:/data/context
-     # - ${LOGIC_CONFIG:-logic-config}:/data/config
+    volumes:      
+      - node-red-context:/data/context      
       - ${LOGIC_CUSTOM:-logic-custom}:/data/custom 
       - ${SPEC_SOURCE:-api-spec}:/data/spec:ro
     extra_hosts:
@@ -162,10 +160,10 @@ services:
       - topgolf
 
 volumes:
- # logic-flow:
+  logic-flow:
+  logic-config:
   node-red-context:
   logic-custom:
- # logic-config:
   app-source:
   api-spec: 
   database:

@@ -13,7 +13,13 @@ services:
       - "1880:1880"
       - "9229:9229"   
       - "7000:7000"
-      - "8000:8000" 
+      - "8000:8000"
+    volumes:
+      - ${LOGIC_FLOW:-logic-flow}:/data/projects/logic
+      - node-red-context:/data/context
+      - ${LOGIC_CONFIG:-logic-config}:/data/config
+      - ${LOGIC_CUSTOM:-logic-custom}:/data/custom 
+      - ${SPEC_SOURCE:-api-spec}:/data/spec:ro
   app:
     build: ../web    
 
