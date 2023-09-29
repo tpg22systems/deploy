@@ -54,9 +54,26 @@ make dev
 
 ### Updating to the latest images
 
-Docker compose will automatically swap out containers. Runing make again, with the correct parameters should replace images that need updates. 
+Docker compose will automatically swap out containers. Runing make again, with the correct parameters should replace images that need updates.
 
-Running *make* again will shut down only the images that need changing, and update them. 
+Running *make* again will shut down only the images that need changing, and update them.
+
+### Updating just config
+
+It is possible to only update the config without a full image update.
+
+```bash
+make config
+```
+
+### Updateing node-red flow
+
+Sometimes you just want to ensure that the flow is at the latest version.
+This will also restart the container to get the new flow operational.
+
+```bash
+make logic 
+```
 
 ### Shutdown
 
@@ -82,4 +99,14 @@ If you want to start everything over, wipe all the containers and run make again
 make wipe
 ```
 
+## Configuration options
 
+### Locally stored context
+
+The game data is normally stored in a docker volume. If you want to get easy access to the data to make it very simple for backup and restore, you can mount a directory on the host. Make sure that the direcory is writable.
+
+Set **LOGIC_CONTEXT** in the .env file.
+
+```bash
+LOGIC_CONTEXT=./context
+```
