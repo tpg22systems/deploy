@@ -52,19 +52,6 @@ services:
       - topgolf  
     ports:
       - 4010:4010
-  couchdb:
-    container_name: couchdb
-    image: couchdb
-    restart: always
-    volumes:
-      - ./couchdb/:/opt/couchdb/etc/local.d
-      - ${COUCHDB_DATA:-couchdb-data}:/opt/couchdb/data
-    networks:
-      - topgolf
-    expose: 
-      - 5984
-    ports:
-      - 5984:5984
   ntp:
     image: cturra/ntp
     container_name: ntp
