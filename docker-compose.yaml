@@ -10,8 +10,6 @@ services:
     container_name: node-red
     image: ${REGISTRY:-docker.camart.co.uk:5000}/tpg22-control-build-logic:latest    
     restart: always
-    depends_on:
-      - couchdb
     environment:
       - TZ=Europe/London
       - NODE_RED_CREDENTIAL_SECRET      
