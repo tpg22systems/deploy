@@ -14,8 +14,10 @@ services:
       - TZ=Europe/London
       - NODE_RED_CREDENTIAL_SECRET      
     ports:
-      - "7000:7000"
-      - "8000:8000"
+      - 7000:7000
+      - 8000:8000
+    expose:
+      - 1880
     networks:
       - topgolf
     volumes:      
