@@ -43,7 +43,7 @@ services:
     container_name: prism
     image: stoplight/prism:4
     restart: always
-    command: 'proxy -h 0.0.0.0 /spec/api/gamelogic.openapi.yaml http://logic:1880/v1/'
+    command: 'proxy -h 0.0.0.0 /spec/api/gamelogic.openapi.yaml -m false http://logic:1880/v1/'
     volumes:      
       - ${SPEC_SOURCE:-api-spec}:/spec:ro
     networks:
@@ -132,7 +132,7 @@ services:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-golf}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASS:-charts}
       - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_LIVE_ALLOWED_ORIGINS = gamecontrolsystem.com:3000,192.168.11.251:3000
+      - GF_LIVE_ALLOWED_ORIGINS=localhost:3000,gamecontrolsystem.com:3000,gamecontrolsystem.com:3030,192.168.11.251:3000
   nodeexporter:
     image: prom/node-exporter:latest
     container_name: monitoring_node_exporter
