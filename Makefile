@@ -1,5 +1,5 @@
 #!make
-.PHONY: staging prod dev prod-monitoring down down-prod down-staging down-dev wipe logs config status logic
+.PHONY: staging prod dev prod-monitoring down down-prod down-staging down-dev wipe logs config status logic app
 
 prod:
 	@docker compose -f docker-compose.yaml -f docker-compose.prod.yaml pull
@@ -49,6 +49,8 @@ logic:
 	@docker compose exec --workdir /data/projects/logic logic git pull
 	@docker compose restart logic
 
+app:
+	@docker compose exec --workdir /usr/share/nginx/html/client app git pull
 
 status:
 	wget -O - http://localhost/api/v1/status
